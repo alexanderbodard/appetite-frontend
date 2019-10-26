@@ -11,7 +11,7 @@ Future<List<Category>> fetchCategories() async {
       Map(),
       (acc, item) {
         MenuItem menuItem = MenuItem.fromJson(item);
-        String category = item['category'];
+        String category = item['category']['name'];
         if (acc.keys.contains(category)) {
           acc[category].add(menuItem);
         } else {
@@ -22,7 +22,7 @@ Future<List<Category>> fetchCategories() async {
       }
     );
 
-    return List<Category>.from(categories.entries.map((entry) => Category(entry.value, entry.key)));
+    return List<Category>.from(categories.entries.map((entry) => Category(entry.value.sort((a, b) => -a.suggested.compareTo(b.suggested)), entry.key)));
   } else {
     // If that response was not OK, throw an error.
     throw Exception('Failed to load menu items: ' + response.statusCode.toString());

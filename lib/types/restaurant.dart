@@ -17,25 +17,26 @@ class MenuItem {
   double price;
   String name;
   String description;
+  bool suggested;
 
   int count = 0;
 
-  MenuItem(this.price, this.name, this.description);
+  MenuItem(this.price, this.name, this.description, this.suggested);
 
   static List<MenuItem> get mock {
     return [
-      MenuItem(2.05, 'Coca Cola', 'Coca Cola description'),
-      MenuItem(1.85, 'Pepsi', 'Coca Cola but worse'),
-      MenuItem(1.9, 'Stella', 'Just beer'),
-      MenuItem(2.5, 'Heineken', 'Just water'),
-      MenuItem(2.05, 'Coca Cola', 'Coca Cola description'),
-      MenuItem(1.85, 'Pepsi', 'Coca Cola but worse'),
-      MenuItem(1.9, 'Stella', 'Just beer'),
-      MenuItem(2.5, 'Heineken', 'Just water'),
-      MenuItem(2.05, 'Coca Cola', 'Coca Cola description'),
-      MenuItem(1.85, 'Pepsi', 'Coca Cola but worse'),
-      MenuItem(1.9, 'Stella', 'Just beer'),
-      MenuItem(2.5, 'Heineken', 'Just water'),
+      MenuItem(2.05, 'Coca Cola', 'Coca Cola description', true),
+      MenuItem(1.85, 'Pepsi', 'Coca Cola but worse', false),
+      MenuItem(1.9, 'Stella', 'Just beer', true),
+      MenuItem(2.5, 'Heineken', 'Just water', false),
+      MenuItem(2.05, 'Coca Cola', 'Coca Cola description', true),
+      MenuItem(1.85, 'Pepsi', 'Coca Cola but worse', false),
+      MenuItem(1.9, 'Stella', 'Just beer', true),
+      MenuItem(2.5, 'Heineken', 'Just water', false),
+      MenuItem(2.05, 'Coca Cola', 'Coca Cola description', true),
+      MenuItem(1.85, 'Pepsi', 'Coca Cola but worse', false),
+      MenuItem(1.9, 'Stella', 'Just beer', true),
+      MenuItem(2.5, 'Heineken', 'Just water', false),
     ];
   }
 
@@ -43,7 +44,8 @@ class MenuItem {
     return MenuItem(
       json['price'],
       json['name'],
-      json['extra_info']
+      json['extra_info'],
+      json['suggested'],
     );
   }
 }
