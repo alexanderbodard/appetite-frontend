@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:appetite/widgets/constants.dart';
+import 'package:appetite/constants.dart';
 import 'package:appetite/widgets/account.dart';
 
 class Util {

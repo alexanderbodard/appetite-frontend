@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:appetite/widgets/constants.dart';
+import 'package:appetite/constants.dart';
 import 'package:appetite/types/restaurant.dart';
 
 class MenuBody extends StatefulWidget {
@@ -30,7 +30,7 @@ class MenuBodyState extends State<MenuBody> {
                 Text('€ ' + categories.fold(
                   0,
                   (acc, item) =>
-                    acc + item.menuItems.fold(0, (acc_, item) => acc + item.price * item.count))
+                    acc + item.menuItems.fold(0, (acc_, item) => acc_ + item.price * item.count))
                     .toStringAsFixed(2), style: TextStyle(fontWeight: FontWeight.bold)
                 ),
               ],
@@ -85,7 +85,7 @@ class PayNowButton extends StatelessWidget {
           ),
         );
       },
-      child: Text('Pay now'),
+      child: Text('Pay now', style: TextStyle(color: Colors.white)),
       color: Colors.red,
     );
   }

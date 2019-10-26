@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:appetite/widgets/constants.dart';
+import 'package:appetite/constants.dart';
 import 'package:appetite/types/account.dart';
 
 class Account extends StatelessWidget {
@@ -33,7 +33,7 @@ class ResetPasswordButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ButtonTheme(
       child: RaisedButton(
-        child: Text('Reset password'),
+        child: Text('Reset password', style: TextStyle(color: Colors.white)),
         onPressed: () {
           showDialog(
             context: context,
@@ -45,7 +45,7 @@ class ResetPasswordButton extends StatelessWidget {
         },
         color: Color(Constants.kotszakske),
       ),
-      minWidth: 240,
+      minWidth: 270,
     );
   }
 }
@@ -54,7 +54,7 @@ class DeleteAccountButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ButtonTheme(
       child: RaisedButton(
-        child: Text('Delete account'),
+        child: Text('Delete account', style: TextStyle(color: Colors.white)),
           onPressed: () {
             showDialog(
               context: context,
@@ -66,7 +66,7 @@ class DeleteAccountButton extends StatelessWidget {
           },
         color: Colors.red
       ),
-      minWidth: 240,
+      minWidth: 270,
 
     );
   }
