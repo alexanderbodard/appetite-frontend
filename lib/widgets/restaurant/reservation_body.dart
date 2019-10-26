@@ -8,8 +8,8 @@ class ReservationBody extends StatelessWidget {
   ReservationBody(this.restaurantState);
 
   Widget build(BuildContext context) {
-    if (restaurantState.reserved) {
-      return Reserved();
+    if (restaurantState.reservationDate != null) {
+      return Reserved(restaurantState);
     } else if (restaurantState.onSpot) {
       return OnSpot();
     } else {
@@ -19,14 +19,41 @@ class ReservationBody extends StatelessWidget {
 }
 
 class Reserved extends StatelessWidget {
+  final RestaurantState restaurantState;
+
+  Reserved(this.restaurantState);
+
   Widget build(BuildContext context) {
-    return Text('You have already reserved a spot!');
+    return GoodToGo("Your reservation on\n${restaurantState.reservationDate.replaceFirst(' ', ' at ')}\nfor ${restaurantState.reservationAmount} people\nhas been confirmed.\n\nYou're good to go!");
   }
 }
 
 class OnSpot extends StatelessWidget {
   Widget build(BuildContext context) {
-    return Text("You're already at the restaurant, no need to reserve a spot!");
+    return GoodToGo("You're already at the restaurant, no need to reserve a spot!");
+  }
+}
+
+class GoodToGo extends StatelessWidget {
+  final String text;
+
+  GoodToGo(this.text);
+
+  Widget build(BuildContext context) {
+    return Center(child: Column(
+      children: [
+        Padding(padding: EdgeInsets.only(
+          top: 60,
+        )),
+        Container(
+          child: Image.asset('assets/vink.png'),
+          margin: EdgeInsets.only(
+            left: 30
+          )
+        ),
+        Text(text, style: TextStyle(fontSize: 22), textAlign: TextAlign.center)
+      ]
+    ));
   }
 }
 

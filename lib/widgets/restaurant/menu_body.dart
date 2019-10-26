@@ -1,23 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:appetite/constants.dart';
 import 'package:appetite/types/restaurant.dart';
+import 'package:appetite/widgets/restaurant.dart';
+import 'package:appetite/queries/menu_items.dart';
 
 class MenuBody extends StatefulWidget {
-  MenuBodyState createState() => MenuBodyState();
+  final RestaurantState restaurantState;
+
+  MenuBody(this.restaurantState);
+
+  MenuBodyState createState() => MenuBodyState(restaurantState);
 }
 
 class MenuBodyState extends State<MenuBody> {
-  final List<Category> categories = Category.mock;
+  Future<List<Category>> categories;
+  final RestaurantState restaurantState;
+
+  MenuBodyState(this.restaurantState);
+
+  void initState() {
+    super.initState();
+    categories = fetchCategories();
+  }
 
   Widget build(BuildContext context) {
-    return ListView(
-      children: categories.map(
-              (category) => CategoryBody(category, this)
-      ).fold(List(), (acc, item) => acc.length > 0 ? acc + [Divider(), item] : [header(), Divider(thickness: 4), item])
+    return FutureBuilder<List<Category>>(
+      future: categories,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ListView(
+              children: snapshot.data.map(
+                (category) => CategoryBody(category, this)
+              ).fold(List(), (acc, item) => acc.length > 0 ? acc + [Divider(), item] : [header(snapshot), Divider(thickness: 4), item])
+          );
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+
+        // By default, show a loading spinner.
+        return CircularProgressIndicator();
+      },
     );
   }
 
-  Widget header() {
+  Widget header(snapshot) {
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -27,7 +53,7 @@ class MenuBodyState extends State<MenuBody> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text('Total Price', style: TextStyle(fontWeight: FontWeight.bold)),
-                Text('€ ' + categories.fold(
+                Text('€ ' + snapshot.data.fold(
                   0,
                   (acc, item) =>
                     acc + item.menuItems.fold(0, (acc_, item) => acc_ + item.price * item.count))
@@ -37,7 +63,7 @@ class MenuBodyState extends State<MenuBody> {
             ),
             width: MediaQuery.of(context).size.width * 0.55,
           ),
-          PayNowButton()
+          PayNowButton(restaurantState, this, snapshot)
         ],
       ),
       margin: const EdgeInsets.all(20.0)
@@ -74,6 +100,13 @@ class CategoryBody extends StatelessWidget {
 }
 
 class PayNowButton extends StatelessWidget {
+  final RestaurantState restaurantState;
+  final MenuBodyState menuBodyState;
+
+  final snapshot;
+
+  PayNowButton(this.restaurantState, this.menuBodyState, this.snapshot);
+
   Widget build(BuildContext context) {
     return RaisedButton(
       onPressed: () {
@@ -81,14 +114,21 @@ class PayNowButton extends StatelessWidget {
           context: context,
           child: AlertDialog(
             title: Text('Alert'),
-            content: Text('You paid'),
+            content: Text(
+              canPay() ? 'You paid' : 'You need to be either present in the restaurant, or have reserved a spot to be able to order'
+            ),
           ),
         );
+        if (canPay()) { menuBodyState.setState(() => snapshot.data.forEach(
+          (category) => category.menuItems.forEach((menuItem) => menuItem.count = 0)
+        )); }
       },
       child: Text('Pay now', style: TextStyle(color: Colors.white)),
-      color: Colors.red,
+      color: canPay() ? Colors.red : Colors.grey,
     );
   }
+
+  bool canPay() => restaurantState.onSpot || restaurantState.reservationDate != null;
 }
 
 class Counter extends StatelessWidget {

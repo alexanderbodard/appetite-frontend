@@ -5,12 +5,13 @@ import 'package:appetite/constants.dart';
 import 'package:appetite/widgets/restaurant.dart';
 
 import 'package:flutter/cupertino.dart';
-// For changing the language
-import 'package:flutter_localizations/flutter_localizations.dart';
-// import 'package:flutter_cupertino_localizations/flutter_cupertino_localizations.dart';
 
 class BasicDateTimeField extends StatelessWidget {
   final format = DateFormat("yyyy-MM-dd HH:mm");
+  final controller;
+
+  BasicDateTimeField(this.controller);
+
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
@@ -19,6 +20,7 @@ class BasicDateTimeField extends StatelessWidget {
         padding: EdgeInsets.all(12),
       ),
       DateTimeField(
+        controller: controller,
         format: format,
         onShowPicker: (context, currentValue) async {
           final date = await showDatePicker(
@@ -87,6 +89,17 @@ class DateTimeForm extends StatefulWidget {
 class _DateTimeFormState extends State<DateTimeForm> {
   final RestaurantState restaurantState;
 
+  final dateController = TextEditingController();
+  final textController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    dateController.dispose();
+    textController.dispose();
+    super.dispose();
+  }
+
   _DateTimeFormState(this.restaurantState);
 
   final formKey = GlobalKey<FormState>();
@@ -105,7 +118,7 @@ class _DateTimeFormState extends State<DateTimeForm> {
             ),
             alignment: Alignment.center,
           ),
-          BasicDateTimeField(),
+          BasicDateTimeField(dateController),
           Container(
             child: Text('Please enter the number of attendees'),
             padding: EdgeInsets.only(
@@ -116,6 +129,7 @@ class _DateTimeFormState extends State<DateTimeForm> {
           ),
           TextField(
             keyboardType: TextInputType.number,
+            controller: textController,
           ),
           SizedBox(height: 24),
           Padding(padding: EdgeInsets.all(25)),
@@ -123,7 +137,7 @@ class _DateTimeFormState extends State<DateTimeForm> {
             child: RaisedButton(
               child: Text('Reserve spot', style: TextStyle(fontSize: 24, color: Colors.white)),
               onPressed: () {
-                restaurantState.setState(() => restaurantState.reserved = true);
+                restaurantState.setState(() { restaurantState.reservationDate = dateController.text; restaurantState.reservationAmount = int.parse(textController.text); });
               },
               color: Color(Constants.kotszakske),
             ),

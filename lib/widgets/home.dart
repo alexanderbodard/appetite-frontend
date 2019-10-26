@@ -91,7 +91,7 @@ class _QRSelection extends StatelessWidget {
               ),
             );
 
-            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Restaurant(false, true)));
+            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Restaurant(true)));
           },
         )
       )
@@ -116,7 +116,7 @@ class _ManualSelection extends StatelessWidget {
               ),
             );
 
-            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Restaurant(false, false)));
+            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Restaurant(false)));
           },
         )
       )

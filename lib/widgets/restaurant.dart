@@ -8,20 +8,22 @@ import 'package:appetite/util/appbar.dart';
 
 
 class Restaurant extends StatefulWidget {
-  bool reserved;
+  String reservationDate = null;
+  int reservationAmount = 0;
   bool onSpot;
 
-  Restaurant(this.reserved, this.onSpot);
+  Restaurant(this.onSpot);
 
-  RestaurantState createState() => RestaurantState(reserved, onSpot);
+  RestaurantState createState() => RestaurantState(onSpot);
 }
 
 class RestaurantState extends State<Restaurant> {
   String _tab = 'Reservation';
-  bool reserved;
+  String reservationDate = null;
+  int reservationAmount = 0;
   bool onSpot;
 
-  RestaurantState(this.reserved, this.onSpot);
+  RestaurantState(this.onSpot);
 
   void setTab(String tab) {
     setState(() =>_tab = tab);
@@ -32,10 +34,9 @@ class RestaurantState extends State<Restaurant> {
       appBar: Util.appBar(_tab, context),
       body: _Body(this),
       persistentFooterButtons: <Widget>[
+        _ReservationButton(this),
         _MenuButton(this),
         _OrdersButton(this),
-        _UsersButton(this),
-        _ReservationButton(this),
       ],
     );
   }
@@ -48,7 +49,7 @@ class _Body extends StatelessWidget {
 
   Widget build(BuildContext context) {
     if (this.parent._tab == 'Menu') {
-      return MenuBody();
+      return MenuBody(parent);
     }
     if (this.parent._tab == 'Orders') {
       return OrdersBody();

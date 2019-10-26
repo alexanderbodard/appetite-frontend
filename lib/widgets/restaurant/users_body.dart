@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:appetite/types/restaurant.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 

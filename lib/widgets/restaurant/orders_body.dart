@@ -1,20 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:appetite/types/restaurant.dart';
+import 'package:appetite/queries/order_items.dart';
 
 class OrdersBody extends StatelessWidget {
-  final List<Order> orders = Order.mock;
+  final Future<List<Order>> orders = fetchOrders();
 
   Widget build(BuildContext context) {
-    return ListView(
-      children: orders.map((order) => OrderBody(order)).fold(
-        [],
-        (acc, item) => acc.length == 0 ? [item] : acc + [
-          Padding(padding: EdgeInsets.all(8)),
-          Divider(thickness: 4),
-          Padding(padding: EdgeInsets.all(8)),
-          item
-        ]
-      )
+    return FutureBuilder<List<Order>>(
+      future: orders,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ListView(
+            children: snapshot.data.map((order) => OrderBody(order)).fold(
+              [],
+              (acc, item) => acc.length == 0 ? [item] : acc + [
+                Padding(padding: EdgeInsets.all(8)),
+                Divider(thickness: 4),
+                Padding(padding: EdgeInsets.all(8)),
+                item
+              ]
+            )
+          );
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+
+        // By default, show a loading spinner.
+        return CircularProgressIndicator();
+      },
     );
   }
 }

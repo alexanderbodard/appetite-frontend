@@ -49,6 +49,7 @@ flutter:
   assets:
     - assets/Appetite wit.png
     - assets/icons/
+    - assets/vink.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
