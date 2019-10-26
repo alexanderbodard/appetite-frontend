@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'restaurant.dart';
 import 'constants.dart';
+import 'util/appbar.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -19,10 +20,7 @@ class Home extends StatelessWidget {
 class _Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Welcome to Appetite'),
-        backgroundColor: Color(Constants.kotszakske),
-      ),
+      appBar: Util.appBar('Welcome to Appetite', context),
       body: Container(
         child: Column(
           children: <Widget>[

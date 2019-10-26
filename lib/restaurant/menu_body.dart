@@ -53,7 +53,7 @@ class PayNowButton extends StatelessWidget {
         );
       },
       child: Text('Pay now'),
-      color: Colors.white12,
+      color: Colors.red,
     );
   }
 }

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'constants.dart';
 import 'package:appetite/restaurant/menu_body.dart';
 import 'package:appetite/restaurant/orders_body.dart';
-import 'package:appetite/restaurant/account_body.dart';
+import 'package:appetite/util/appbar.dart';
+
 
 class Restaurant extends StatefulWidget {
   RestaurantState createState() => RestaurantState();
@@ -17,14 +18,10 @@ class RestaurantState extends State<Restaurant> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Restaurant Menu'),
-        backgroundColor: Color(Constants.kotszakske),
-      ),
+      appBar: Util.appBar('Restaurant', context),
       body: _Body(this),
       persistentFooterButtons: <Widget>[
         _MenuButton(this),
-        _AccountButton(this),
         _OrdersButton(this),
       ],
     );
@@ -39,9 +36,6 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     if (this.parent._tab == 'Menu') {
       return MenuBody();
-    }
-    if (this.parent._tab == 'Account') {
-      return AccountBody();
     }
     if (this.parent._tab == 'Orders') {
       return OrdersBody();
