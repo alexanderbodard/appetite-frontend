@@ -1,12 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:appetite/constants.dart';
 
-class MenuBody extends StatelessWidget {
+class MenuBody extends StatefulWidget {
+  MenuBodyState createState() => MenuBodyState();
+}
+
+class MenuBodyState extends State<MenuBody> {
+  final List<MenuItem> menuItems = MenuItem.mock;
+
   Widget build(BuildContext context) {
     return ListView(
-      children: MenuItem.mock.map(
-          (menuItem) => MenuItemWidget(menuItem)
-      ).fold(List(), (acc, item) => acc.length > 0 ? acc + [Divider(), item] : acc + [item])
+      children: menuItems.map(
+              (menuItem) => MenuItemWidget(menuItem, this)
+      ).fold(List(), (acc, item) => acc.length > 0 ? acc + [Divider(), item] : acc + [header(), Divider(thickness: 4),item])
+    );
+  }
+
+  Widget header() {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text('Total Price', style: TextStyle(fontWeight: FontWeight.bold)),
+                Text('€ ' + menuItems.fold(0, (acc, item) => acc + item.price * item.count).toStringAsFixed(2), style: TextStyle(fontWeight: FontWeight.bold)),
+              ],
+            ),
+            width: MediaQuery.of(context).size.width * 0.55,
+          ),
+          PayNowButton()
+        ],
+      ),
+      margin: const EdgeInsets.all(20.0)
+    );
+  }
+}
+
+class PayNowButton extends StatelessWidget {
+
+  Widget build(BuildContext context) {
+    return RaisedButton(
+      onPressed: () {
+        showDialog(
+          context: context,
+          child: AlertDialog(
+            title: Text('Alert'),
+            content: Text('You paid'),
+          ),
+        );
+      },
+      child: Text('Pay now'),
+      color: Colors.white12,
     );
   }
 }
@@ -28,7 +75,7 @@ class Counter extends StatelessWidget {
             shape: CircleBorder()
           ),
         ),
-        Container(child: Text(menuItemWidgetState.count.toString(), textAlign: TextAlign.center), margin: EdgeInsets.only(left: 8, right: 8)),
+        Container(child: Text(menuItemWidgetState.menuItem.count.toString(), textAlign: TextAlign.center), margin: EdgeInsets.only(left: 8, right: 8)),
         SizedBox(
           width: 30.0,
           child: RaisedButton(
@@ -45,21 +92,26 @@ class Counter extends StatelessWidget {
 
 class MenuItemWidget extends StatefulWidget {
   final MenuItem menuItem;
+  final MenuBodyState menuBodyState;
 
-  MenuItemWidget(this.menuItem);
+  MenuItemWidget(this.menuItem, this.menuBodyState);
 
-  MenuItemWidgetState createState() => MenuItemWidgetState(menuItem);
+  MenuItemWidgetState createState() => MenuItemWidgetState(menuItem, menuBodyState);
 }
 
 class MenuItemWidgetState extends State<MenuItemWidget> {
   final MenuItem menuItem;
-  int count = 0;
+  final MenuBodyState menuBodyState;
 
-  MenuItemWidgetState(this.menuItem);
+  MenuItemWidgetState(this.menuItem, this.menuBodyState);
 
-  void countUp() => setState(() => count++);
+  void countUp() {
+    menuBodyState.setState(() => menuItem.count++);
+  }
 
-  void countDown() => setState(() => count = count == 0 ? 0 : count - 1);
+  void countDown() {
+    menuBodyState.setState(() => menuItem.count = menuItem.count == 0 ? 0 : menuItem.count - 1);
+  }
 
   Widget build(BuildContext context) {
     return Container(
@@ -73,7 +125,7 @@ class MenuItemWidgetState extends State<MenuItemWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(menuItem.name, style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text('€ ' + menuItem.price.toString()),
+                    Text('€ ' + menuItem.price.toStringAsFixed(2)),
                   ],
                 ),
                 width: MediaQuery.of(context).size.width * 0.55,
@@ -88,7 +140,7 @@ class MenuItemWidgetState extends State<MenuItemWidget> {
           ),
         ],
       ),
-      margin: const EdgeInsets.all(20.0),
+      margin: const EdgeInsets.all(12.0),
     );
   }
 }
@@ -98,6 +150,8 @@ class MenuItem {
   double price;
   String name;
   String description;
+
+  int count = 0;
 
   MenuItem(this.id, this.price, this.name, this.description);
 

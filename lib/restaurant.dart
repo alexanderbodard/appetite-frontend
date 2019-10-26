@@ -56,7 +56,7 @@ class _AccountButton extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return FlatButton(
-      child: Text('Account'),
+      child: Image.asset('assets/icons/account_' + (parent._tab == 'Account' ? 'selected' : 'normal') + '.png', width: 50),
       onPressed: () {
         parent.setTab('Account');
       },
@@ -64,7 +64,6 @@ class _AccountButton extends StatelessWidget {
         left: Constants.flatButtonPadding,
         right: Constants.flatButtonPadding,
       ),
-      color: parent._tab == 'Account' ? Colors.lightBlue : Colors.white
     );
   }
 }
@@ -76,7 +75,7 @@ class _MenuButton extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return FlatButton(
-      child: Text('Menu'),
+      child: Image.asset('assets/icons/menu_' + (parent._tab == 'Menu' ? 'selected' : 'normal') + '.png', width: 50),
       onPressed: () {
         parent.setTab('Menu');
       },
@@ -84,7 +83,6 @@ class _MenuButton extends StatelessWidget {
         left: Constants.flatButtonPadding,
         right: Constants.flatButtonPadding,
       ),
-      color: parent._tab == 'Menu' ? Colors.lightBlue : Colors.white
     );
   }
 }
@@ -96,7 +94,7 @@ class _OrdersButton extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return FlatButton(
-      child: Text('Orders'),
+      child: Image.asset('assets/icons/orders_' + (parent._tab == 'Orders' ? 'selected' : 'normal') + '.png', width: 50),
       onPressed: () {
         parent.setTab('Orders');
       },
@@ -104,7 +102,6 @@ class _OrdersButton extends StatelessWidget {
         left: Constants.flatButtonPadding,
         right: Constants.flatButtonPadding,
       ),
-      color: parent._tab == 'Orders' ? Colors.lightBlue : Colors.white
     );
   }
 }

@@ -43,6 +43,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/Appetite wit.png
+    - assets/icons/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
