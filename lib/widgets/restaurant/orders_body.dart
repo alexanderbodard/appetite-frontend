@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:appetite/types/restaurant.dart';
 
 class OrdersBody extends StatelessWidget {
-  final List<Order> orders = [Order.mock, Order.mock];
+  final List<Order> orders = Order.mock;
 
   Widget build(BuildContext context) {
     return ListView(

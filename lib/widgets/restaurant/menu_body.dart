@@ -7,13 +7,13 @@ class MenuBody extends StatefulWidget {
 }
 
 class MenuBodyState extends State<MenuBody> {
-  final List<MenuItem> menuItems = MenuItem.mock;
+  final List<Category> categories = Category.mock;
 
   Widget build(BuildContext context) {
     return ListView(
-      children: menuItems.map(
-              (menuItem) => MenuItemWidget(menuItem, this)
-      ).fold(List(), (acc, item) => acc.length > 0 ? acc + [Divider(), item] : acc + [header(), Divider(thickness: 4),item])
+      children: categories.map(
+              (category) => CategoryBody(category, this)
+      ).fold(List(), (acc, item) => acc.length > 0 ? acc + [Divider(), item] : [header(), Divider(thickness: 4), item])
     );
   }
 
@@ -27,7 +27,12 @@ class MenuBodyState extends State<MenuBody> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text('Total Price', style: TextStyle(fontWeight: FontWeight.bold)),
-                Text('€ ' + menuItems.fold(0, (acc, item) => acc + item.price * item.count).toStringAsFixed(2), style: TextStyle(fontWeight: FontWeight.bold)),
+                Text('€ ' + categories.fold(
+                  0,
+                  (acc, item) =>
+                    acc + item.menuItems.fold(0, (acc_, item) => acc + item.price * item.count))
+                    .toStringAsFixed(2), style: TextStyle(fontWeight: FontWeight.bold)
+                ),
               ],
             ),
             width: MediaQuery.of(context).size.width * 0.55,
@@ -36,6 +41,34 @@ class MenuBodyState extends State<MenuBody> {
         ],
       ),
       margin: const EdgeInsets.all(20.0)
+    );
+  }
+}
+
+class CategoryBody extends StatelessWidget {
+  final Category category;
+  final MenuBodyState menuBodyState;
+
+  CategoryBody(this.category, this.menuBodyState);
+
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Container(
+          child: Row(
+            children: [
+              Text(category.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22))
+            ],
+            crossAxisAlignment: CrossAxisAlignment.start,
+          ),
+          margin: EdgeInsets.only(
+              top: 16,
+              bottom: 8,
+              left: 16
+          ),
+        ),
+        Column(children: category.menuItems.map((menuItem) => MenuItemWidget(menuItem, menuBodyState)).toList())
+      ],
     );
   }
 }
