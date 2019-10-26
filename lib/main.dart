@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'home.dart';
+import 'package:appetite/widgets/home.dart';
 
 void main() => runApp(MyApp());
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'constants.dart';
+import 'package:appetite/widgets/constants.dart';
+import 'package:appetite/types/account.dart';
 
 class Account extends StatelessWidget {
   final List<SettingItem> settingItems = SettingItem.mock;
@@ -13,7 +14,7 @@ class Account extends StatelessWidget {
       body: Column(
         children: [
           Column(
-            children: settingItems.fold(
+            children: settingItems.map((settingItem) => SettingItemWidget(settingItem)).fold(
                 [],
                 (acc, item) => acc.length == 0 ? [item] : acc + [Divider(), item]
               ),
@@ -71,31 +72,21 @@ class DeleteAccountButton extends StatelessWidget {
   }
 }
 
-class SettingItem extends StatelessWidget {
-  final String settingKey;
-  final String settingValue;
+class SettingItemWidget extends StatelessWidget {
+  final SettingItem settingItem;
 
-  SettingItem(this.settingKey, this.settingValue);
+  SettingItemWidget(this.settingItem);
 
   Widget build(BuildContext context) {
     return Container(
       child: Column(
         children: <Widget>[
-          Text(settingKey, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
-          Text(settingValue, style: TextStyle(fontSize: 16)),
+          Text(settingItem.settingKey, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+          Text(settingItem.settingValue, style: TextStyle(fontSize: 16)),
         ],
         crossAxisAlignment: CrossAxisAlignment.start
       ),
       margin: EdgeInsets.all(16)
     );
-  }
-
-  static List<SettingItem> get mock {
-    return [
-      SettingItem('First name', 'Brecht'),
-      SettingItem('Last name', 'Horsten'),
-      SettingItem('Email address', 'brecht.horsten@quivr.be'),
-      SettingItem('Language', 'English'),
-    ];
   }
 }

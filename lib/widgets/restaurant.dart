@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'constants.dart';
-import 'package:appetite/restaurant/menu_body.dart';
-import 'package:appetite/restaurant/orders_body.dart';
+import 'package:appetite/widgets/restaurant/menu_body.dart';
+import 'package:appetite/widgets/restaurant/orders_body.dart';
 import 'package:appetite/util/appbar.dart';
 
 

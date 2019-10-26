@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:appetite/constants.dart';
+import 'package:appetite/widgets/constants.dart';
+import 'package:appetite/types/restaurant.dart';
 
 class MenuBody extends StatefulWidget {
   MenuBodyState createState() => MenuBodyState();
@@ -40,7 +41,6 @@ class MenuBodyState extends State<MenuBody> {
 }
 
 class PayNowButton extends StatelessWidget {
-
   Widget build(BuildContext context) {
     return RaisedButton(
       onPressed: () {
@@ -142,34 +142,5 @@ class MenuItemWidgetState extends State<MenuItemWidget> {
       ),
       margin: const EdgeInsets.all(12.0),
     );
-  }
-}
-
-class MenuItem {
-  int id;
-  double price;
-  String name;
-  String description;
-
-  int count = 0;
-
-  MenuItem(this.id, this.price, this.name, this.description);
-
-  static List<MenuItem> get mock {
-    return [
-      MenuItem(1, 2.05, 'Coca Cola', 'Coca Cola description'),
-      MenuItem(2, 1.85, 'Pepsi', 'Coca Cola but worse'),
-      MenuItem(3, 1.9, 'Stella', 'Just beer'),
-      MenuItem(4, 2.5, 'Heineken', 'Just water'),
-      MenuItem(1, 2.05, 'Coca Cola', 'Coca Cola description'),
-      MenuItem(2, 1.85, 'Pepsi', 'Coca Cola but worse'),
-      MenuItem(3, 1.9, 'Stella', 'Just beer'),
-      MenuItem(4, 2.5, 'Heineken', 'Just water'),
-      MenuItem(1, 2.05, 'Coca Cola', 'Coca Cola description'),
-      MenuItem(2, 1.85, 'Pepsi', 'Coca Cola but worse'),
-      MenuItem(3, 1.9, 'Stella', 'Just beer'),
-      MenuItem(4, 2.5, 'Heineken', 'Just water'),
-
-    ];
   }
 }

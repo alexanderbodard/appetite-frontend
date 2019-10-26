@@ -3,9 +3,9 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'restaurant.dart';
-import 'constants.dart';
-import 'util/appbar.dart';
+import 'package:appetite/widgets/restaurant.dart';
+import 'package:appetite/widgets/constants.dart';
+import 'package:appetite/util/appbar.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -105,13 +105,13 @@ class _ManualSelection extends StatelessWidget {
         minWidth: 240.0,
         buttonColor: Color(Constants.kotszakske),
         child: RaisedButton(
-          child: Text('Enter a restaurant manually'),
+          child: Text('Enter a widgets.restaurant manually'),
           onPressed: () {
             showDialog(
               context: context,
               child: AlertDialog(
                 title: Text('Alert'),
-                content: Text('You entered a restaurant manually'),
+                content: Text('You entered a widgets.restaurant manually'),
               ),
             );
 
