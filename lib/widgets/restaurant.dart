@@ -3,7 +3,7 @@ import 'package:appetite/constants.dart';
 import 'package:appetite/widgets/restaurant/menu_body.dart';
 import 'package:appetite/widgets/restaurant/orders_body.dart';
 import 'package:appetite/widgets/restaurant/users_body.dart';
-import 'package:appetite/widgets/restaurant/reservations_body.dart';
+import 'package:appetite/widgets/restaurant/reservation_body.dart';
 import 'package:appetite/util/appbar.dart';
 
 
@@ -17,7 +17,7 @@ class Restaurant extends StatefulWidget {
 }
 
 class RestaurantState extends State<Restaurant> {
-  String _tab = 'Reservations';
+  String _tab = 'Reservation';
   bool reserved;
   bool onSpot;
 
@@ -35,7 +35,7 @@ class RestaurantState extends State<Restaurant> {
         _MenuButton(this),
         _OrdersButton(this),
         _UsersButton(this),
-        _ReservationsButton(this),
+        _ReservationButton(this),
       ],
     );
   }
@@ -56,8 +56,8 @@ class _Body extends StatelessWidget {
     if (this.parent._tab =='Users') {
       return UsersBody();
     }
-    if (this.parent._tab == 'Reservations') {
-      return ReservationsBody(parent);
+    if (this.parent._tab == 'Reservation') {
+      return ReservationBody(parent);
     }
   }
 }
@@ -138,16 +138,16 @@ class _UsersButton extends StatelessWidget {
   }
 }
 
-class _ReservationsButton extends StatelessWidget {
+class _ReservationButton extends StatelessWidget {
   RestaurantState parent;
 
-  _ReservationsButton(this.parent);
+  _ReservationButton(this.parent);
 
   Widget build(BuildContext context) {
     return FlatButton(
-      child: Image.asset('assets/icons/reservations_' + (parent._tab == 'Reservations' ? 'selected' : 'normal') + '.png', width: 50),
+      child: Image.asset('assets/icons/reservation_' + (parent._tab == 'Reservation' ? 'selected' : 'normal') + '.png', width: 50),
       onPressed: () {
-        parent.setTab('Reservations');
+        parent.setTab('Reservation');
       },
       padding: const EdgeInsets.only(
         left: Constants.flatButtonPadding,

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:appetite/widgets/restaurant.dart';
 import 'package:appetite/util/date_time_picker.dart';
 
-class ReservationsBody extends StatelessWidget {
+class ReservationBody extends StatelessWidget {
   final RestaurantState restaurantState;
 
-  ReservationsBody(this.restaurantState);
+  ReservationBody(this.restaurantState);
 
   Widget build(BuildContext context) {
     if (restaurantState.reserved) {
@@ -13,7 +13,7 @@ class ReservationsBody extends StatelessWidget {
     } else if (restaurantState.onSpot) {
       return OnSpot();
     } else {
-      return NotReserved();
+      return NotReserved(restaurantState);
     }
   }
 }
@@ -31,7 +31,11 @@ class OnSpot extends StatelessWidget {
 }
 
 class NotReserved extends StatelessWidget {
+  final RestaurantState restaurantState;
+
+  NotReserved(this.restaurantState);
+
   Widget build(BuildContext context) {
-    return dateTimeComponent();
+    return dateTimeComponent(restaurantState);
   }
 }

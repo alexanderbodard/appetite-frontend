@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:appetite/constants.dart';
+import 'package:appetite/widgets/restaurant.dart';
 
 import 'package:flutter/cupertino.dart';
 // For changing the language
@@ -41,37 +42,53 @@ class BasicDateTimeField extends StatelessWidget {
   }
 }
 
-Widget dateTimeComponent() => MaterialApp(
-  home: MyHomePage(),
+Widget dateTimeComponent(RestaurantState restaurantState) => MaterialApp(
+  home: MyHomePage(restaurantState),
   theme: ThemeData.light().copyWith(
       inputDecorationTheme:
       InputDecorationTheme(border: OutlineInputBorder())),
 );
 
 class MyHomePage extends StatefulWidget {
+  final RestaurantState restaurantState;
+
+  MyHomePage(this.restaurantState);
+
   @override
-  MyHomePageState createState() => MyHomePageState();
+  MyHomePageState createState() => MyHomePageState(restaurantState);
 }
 
 class MyHomePageState extends State<MyHomePage> {
+  final RestaurantState restaurantState;
+
+  MyHomePageState(this.restaurantState);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: ListView(
           padding: EdgeInsets.all(24),
           children: <Widget>[
-            DateTimeForm(),
+            DateTimeForm(restaurantState),
           ],
         ));
   }
 }
 
 class DateTimeForm extends StatefulWidget {
+  final RestaurantState restaurantState;
+
+  DateTimeForm(this.restaurantState);
+
   @override
-  _DateTimeFormState createState() => _DateTimeFormState();
+  _DateTimeFormState createState() => _DateTimeFormState(restaurantState);
 }
 
 class _DateTimeFormState extends State<DateTimeForm> {
+  final RestaurantState restaurantState;
+
+  _DateTimeFormState(this.restaurantState);
+
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -106,7 +123,7 @@ class _DateTimeFormState extends State<DateTimeForm> {
             child: RaisedButton(
               child: Text('Reserve spot', style: TextStyle(fontSize: 24, color: Colors.white)),
               onPressed: () {
-
+                restaurantState.setState(() => restaurantState.reserved = true);
               },
               color: Color(Constants.kotszakske),
             ),
