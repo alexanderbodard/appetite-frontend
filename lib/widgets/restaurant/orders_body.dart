@@ -2,22 +2,59 @@ import 'package:flutter/material.dart';
 import 'package:appetite/types/restaurant.dart';
 
 class OrdersBody extends StatelessWidget {
-  final List<OrderItem> orderItems = OrderItem.mock;
+  final List<Order> orders = [Order.mock, Order.mock];
 
   Widget build(BuildContext context) {
     return ListView(
-      children: orderItems.map((orderItem) => OrderItemWidget(orderItem)).toList().fold(
-        [TotalOrders(orderItems)],
-        (acc, item) => acc.sublist(0, acc.length - 1) + [item, Divider(), acc.removeLast()]
+      children: orders.map((order) => OrderBody(order)).fold(
+        [],
+        (acc, item) => acc.length == 0 ? [item] : acc + [
+          Padding(padding: EdgeInsets.all(8)),
+          Divider(thickness: 4),
+          Padding(padding: EdgeInsets.all(8)),
+          item
+        ]
       )
     );
   }
 }
 
-class TotalOrders extends StatelessWidget {
+class OrderBody extends StatelessWidget {
+  final Order order;
+
+  OrderBody(this.order);
+
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          child: Row(
+            children: [
+              Text(order.date, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18))
+            ],
+            crossAxisAlignment: CrossAxisAlignment.start,
+          ),
+          margin: EdgeInsets.only(
+            top: 16,
+            bottom: 8,
+            left: 16
+          ),
+        ),
+        Column(
+          children: order.orderItems.map((orderItem) => OrderItemWidget(orderItem)).toList().fold(
+            [OrderTotal(order.orderItems)],
+            (acc, item) => acc.sublist(0, acc.length - 1) + [item, Divider(), acc.removeLast()]
+          )
+        ),
+      ]
+    );
+  }
+}
+
+class OrderTotal extends StatelessWidget {
   final List<OrderItem> orderItems;
 
-  TotalOrders(this.orderItems);
+  OrderTotal(this.orderItems);
 
   Widget build(BuildContext context) {
     return Container(

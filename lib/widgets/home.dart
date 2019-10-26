@@ -8,7 +8,6 @@ import 'package:appetite/widgets/constants.dart';
 import 'package:appetite/util/appbar.dart';
 
 class Home extends StatelessWidget {
-  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Appetite',
@@ -77,7 +76,7 @@ class _QRSelection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ButtonTheme(
-        minWidth: 240.0,
+        minWidth: 270,
         buttonColor: Color(Constants.kotszakske),
         child: RaisedButton(
           child: Text('Scan a QR code'),
@@ -102,7 +101,7 @@ class _ManualSelection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ButtonTheme(
-        minWidth: 240.0,
+        minWidth: 270,
         buttonColor: Color(Constants.kotszakske),
         child: RaisedButton(
           child: Text('Enter a widgets.restaurant manually'),

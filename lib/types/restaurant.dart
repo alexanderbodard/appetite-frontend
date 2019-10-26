@@ -23,8 +23,19 @@ class MenuItem {
       MenuItem(2, 1.85, 'Pepsi', 'Coca Cola but worse'),
       MenuItem(3, 1.9, 'Stella', 'Just beer'),
       MenuItem(4, 2.5, 'Heineken', 'Just water'),
-
     ];
+  }
+}
+
+class Order {
+  int id;
+  List<OrderItem> orderItems;
+  String date;
+
+  Order(this.id, this.orderItems, this.date);
+
+  static Order get mock {
+    return Order(1, OrderItem.mock, '26-10-2019');
   }
 }
 
