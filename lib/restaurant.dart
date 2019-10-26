@@ -63,8 +63,8 @@ class _AccountButton extends StatelessWidget {
       padding: const EdgeInsets.only(
         left: Constants.flatButtonPadding,
         right: Constants.flatButtonPadding,
-
       ),
+      color: parent._tab == 'Account' ? Colors.lightBlue : Colors.white
     );
   }
 }
@@ -84,6 +84,7 @@ class _MenuButton extends StatelessWidget {
         left: Constants.flatButtonPadding,
         right: Constants.flatButtonPadding,
       ),
+      color: parent._tab == 'Menu' ? Colors.lightBlue : Colors.white
     );
   }
 }
@@ -103,6 +104,7 @@ class _OrdersButton extends StatelessWidget {
         left: Constants.flatButtonPadding,
         right: Constants.flatButtonPadding,
       ),
+      color: parent._tab == 'Orders' ? Colors.lightBlue : Colors.white
     );
   }
 }
