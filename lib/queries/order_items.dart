@@ -14,6 +14,21 @@ Future<MenuItem> fetchMenuItem(int id) async {
   }
 }
 
+Future<OrderItem> fetchOrderItem(int id) async {
+  final response =
+  await http.get("http://dondernemers.be/api/v1/OrderItem/$id/");
+
+  if (response.statusCode == 200) {
+    Map jsn = json.decode(response.body);
+    MenuItem menuItem = await fetchMenuItem(jsn['item']);
+
+    return OrderItem.fromJson(jsn, menuItem);
+  } else {
+    // If that response was not OK, throw an error.
+    throw Exception('Failed to load menu item: ' + response.statusCode.toString());
+  }
+}
+
 Future<List<Order>> fetchOrders() async {
   final response =
     await http.get("http://dondernemers.be/api/v1/Order/");
@@ -23,13 +38,10 @@ Future<List<Order>> fetchOrders() async {
     List<OrderItem> orderItems = [];
 
     for (var order in json.decode(response.body)) {
+      orderItems = [];
+      
       for (var orderItem in order['items']) {
-        orderItems = [];
-
-        int menuItemId = orderItem['item'];
-        MenuItem menuItem = await fetchMenuItem(menuItemId);
-
-        orderItems.add(OrderItem.fromJson(order, menuItem));
+        orderItems.add(await fetchOrderItem(orderItem));
       }
 
       orders.add(Order(orderItems, order['created_at'].split('T')[0]));

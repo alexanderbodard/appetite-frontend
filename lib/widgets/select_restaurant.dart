@@ -34,7 +34,7 @@ class SelectRestaurant extends StatelessWidget {
               }
 
               // By default, show a loading spinner.
-              return CircularProgressIndicator();
+              return Center(child: CircularProgressIndicator());
             },
           )
         ]

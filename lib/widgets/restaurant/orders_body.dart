@@ -26,7 +26,7 @@ class OrdersBody extends StatelessWidget {
         }
 
         // By default, show a loading spinner.
-        return CircularProgressIndicator();
+        return Center(child: CircularProgressIndicator());
       },
     );
   }
@@ -113,7 +113,7 @@ class OrderItemWidget extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(orderItem.name + (orderItem.count > 1 ? ' x ' + orderItem.count.toString() : ''), style: TextStyle(fontStyle: FontStyle.italic)),
+                    Text(orderItem.name + (orderItem.count != 1 ? ' x ' + orderItem.count.toString() : ''), style: TextStyle(fontStyle: FontStyle.italic)),
                     Text('€ ' + orderItem.price.toStringAsFixed(2)),
                   ],
                 ),

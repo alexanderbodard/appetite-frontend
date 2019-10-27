@@ -23,7 +23,7 @@ class TestAppState extends State<TestApp> {
         }
 
         // By default, show a loading spinner.
-        return CircularProgressIndicator();
+        return Center(child: CircularProgressIndicator());
       },
     );
   }

@@ -34,7 +34,7 @@ class MenuBodyState extends State<MenuBody> {
         }
 
         // By default, show a loading spinner.
-        return CircularProgressIndicator();
+        return Center(child: CircularProgressIndicator());
       },
     );
   }
@@ -108,7 +108,7 @@ class PayNowButton extends StatelessWidget {
       onPressed: () {
 
         if (canPay()) {
-          pushOrder(List<MenuItem>.from(data.expand((Category category) => List<MenuItem>.from(category.menuItems.where((MenuItem menuItem) => menuItem.count > 0)))));
+          pushOrder(List<MenuItem>.from(data.expand((Category category) => category.menuItems.where((MenuItem menuItem) => menuItem.count > 0).toList())));
 
           menuBodyState.setState(() => data.forEach(
             (category) => category.menuItems.forEach((menuItem) => menuItem.count = 0)
