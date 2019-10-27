@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:appetite/widgets/restaurant.dart';
 import 'package:appetite/constants.dart';
 import 'package:appetite/util/appbar.dart';
+import 'package:appetite/widgets/select_restaurant.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -108,15 +109,7 @@ class _ManualSelection extends StatelessWidget {
         child: RaisedButton(
           child: Text('Enter a restaurant manually'),
           onPressed: () {
-            showDialog(
-              context: context,
-              child: AlertDialog(
-                title: Text('Alert'),
-                content: Text('You entered a restaurant manually'),
-              ),
-            );
-
-            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Restaurant(false)));
+            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => SelectRestaurant()));
           },
         )
       )

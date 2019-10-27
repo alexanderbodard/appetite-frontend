@@ -3,6 +3,7 @@ import 'package:appetite/constants.dart';
 import 'package:appetite/types/restaurant.dart';
 import 'package:appetite/widgets/restaurant.dart';
 import 'package:appetite/queries/menu_items.dart';
+import 'package:appetite/queries/submit_order.dart';
 
 class MenuBody extends StatefulWidget {
   final RestaurantState restaurantState;
@@ -13,15 +14,10 @@ class MenuBody extends StatefulWidget {
 }
 
 class MenuBodyState extends State<MenuBody> {
-  Future<List<Category>> categories;
+  final Future<List<Category>> categories = fetchCategories();
   final RestaurantState restaurantState;
 
   MenuBodyState(this.restaurantState);
-
-  void initState() {
-    super.initState();
-    categories = fetchCategories();
-  }
 
   Widget build(BuildContext context) {
     return FutureBuilder<List<Category>>(
@@ -31,7 +27,7 @@ class MenuBodyState extends State<MenuBody> {
           return ListView(
               children: snapshot.data.map(
                 (category) => CategoryBody(category, this)
-              ).fold(List(), (acc, item) => acc.length > 0 ? acc + [Divider(), item] : [header(snapshot), Divider(thickness: 4), item])
+              ).fold([], (acc, item) => acc.length > 0 ? acc + [Divider(), item] : [header(snapshot.data), Divider(thickness: 4), item])
           );
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
@@ -43,7 +39,7 @@ class MenuBodyState extends State<MenuBody> {
     );
   }
 
-  Widget header(snapshot) {
+  Widget header(data) {
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -53,7 +49,7 @@ class MenuBodyState extends State<MenuBody> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text('Total Price', style: TextStyle(fontWeight: FontWeight.bold)),
-                Text('€ ' + snapshot.data.fold(
+                Text('€ ' + data.fold(
                   0,
                   (acc, item) =>
                     acc + item.menuItems.fold(0, (acc_, item) => acc_ + item.price * item.count))
@@ -63,7 +59,7 @@ class MenuBodyState extends State<MenuBody> {
             ),
             width: MediaQuery.of(context).size.width * 0.55,
           ),
-          PayNowButton(restaurantState, this, snapshot)
+          PayNowButton(restaurantState, this, data)
         ],
       ),
       margin: const EdgeInsets.all(20.0)
@@ -103,25 +99,21 @@ class PayNowButton extends StatelessWidget {
   final RestaurantState restaurantState;
   final MenuBodyState menuBodyState;
 
-  final snapshot;
+  final data;
 
-  PayNowButton(this.restaurantState, this.menuBodyState, this.snapshot);
+  PayNowButton(this.restaurantState, this.menuBodyState, this.data);
 
   Widget build(BuildContext context) {
     return RaisedButton(
       onPressed: () {
-        showDialog(
-          context: context,
-          child: AlertDialog(
-            title: Text('Alert'),
-            content: Text(
-              canPay() ? 'You paid' : 'You need to be either present in the restaurant, or have reserved a spot to be able to order'
-            ),
-          ),
-        );
-        if (canPay()) { menuBodyState.setState(() => snapshot.data.forEach(
-          (category) => category.menuItems.forEach((menuItem) => menuItem.count = 0)
-        )); }
+
+        if (canPay()) {
+          pushOrder(List<MenuItem>.from(data.expand((Category category) => List<MenuItem>.from(category.menuItems.where((MenuItem menuItem) => menuItem.count > 0)))));
+
+          menuBodyState.setState(() => data.forEach(
+            (category) => category.menuItems.forEach((menuItem) => menuItem.count = 0)
+          ));
+        }
       },
       child: Text('Pay now', style: TextStyle(color: Colors.white)),
       color: canPay() ? Colors.red : Colors.grey,
