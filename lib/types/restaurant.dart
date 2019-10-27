@@ -53,6 +53,16 @@ class MenuItem {
     ];
   }
 
+  MenuItem copy() {
+    MenuItem item = MenuItem(
+      id, price, name, description, suggested
+    );
+
+    item.count = count;
+
+    return item;
+  }
+
   factory MenuItem.fromJson(Map<String, dynamic> json) {
     return MenuItem(
       json['id'],

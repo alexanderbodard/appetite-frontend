@@ -108,10 +108,10 @@ class PayNowButton extends StatelessWidget {
       onPressed: () {
 
         if (canPay()) {
-          pushOrder(List<MenuItem>.from(data.expand((Category category) => category.menuItems.where((MenuItem menuItem) => menuItem.count > 0).toList())));
+          pushOrder(List<MenuItem>.from(data.expand((Category category) => category.menuItems.where((MenuItem menuItem) => menuItem.count > 0).map((menuItem) => menuItem.copy()).toList())));
 
           menuBodyState.setState(() => data.forEach(
-            (category) => category.menuItems.forEach((menuItem) => menuItem.count = 0)
+                  (category) => category.menuItems.forEach((menuItem) => menuItem.count = 0)
           ));
         }
       },

@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 void pushOrderItem(MenuItem menuItem, int orderId) async {
-  http.post("http://dondernemers.be/api/v1/OrderItem/", body: {'amount': '2', 'order': orderId.toString(), 'item': menuItem.id.toString()}).then((http.Response response) {
+  http.post("http://dondernemers.be/api/v1/OrderItem/", body: {'amount': menuItem.count.toString(), 'order': orderId.toString(), 'item': menuItem.id.toString()}).then((http.Response response) {
     if (response.statusCode == 201) {
 
     } else {
