@@ -1,16 +1,8 @@
-# appetite
+# Appetite
 
-A new Flutter project.
+Appetite is concept for which the prototype was made during 'HACK.MOSCOW 2019' in a 36 hour time span. It presents a mobile app for ordering at a restaurant, such that waiters could serve people more efficiently. Furthermore, the menu becomes dynamic in the sense that the application suggests dishes to each customer based on previous choices.
+Further features include a reservation tool and data analytics for restaurant owners, giving insights in how to make their business more profitable.
 
-## Getting Started
+This repository contains the prototype for the mobile Flutter app Appetite. Because of time limitations, the only goal was to make a working prototype and no effort has been put in clean software design. 
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Note: As the Appetite backend server is no longer being hosted, certain features will be unavailable.
